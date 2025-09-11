@@ -2,18 +2,22 @@ import sys
 
 from colorama import Fore, Style
 from git import Repo
-
-repo = Repo(".")
+from commit_checker.validation import (
+    validate_empty,
+    validate_longueur,
+    validate_subject,
+)
 
 
 def check_commit_message(message: str):
-    list_message = message.splitlines()
-    # if len(list_message)
+
     rules = {
-        "non_vide": bool(message.strip()),
-        "longueur_ok": len(message.splitlines()[0]) <= 72,
+        "non_vide": validate_empty(message),
+        "longueur_ok": validate_longueur(message),
+        "sujet_ok": validate_subject(message),
     }
-    score = sum(rules.values())
+
+    score = sum(rule["isValid"] for rule in rules.values())
     return {"message": message, "rules": rules, "score": score}
 
 
@@ -34,18 +38,14 @@ def main():
         result = check_commit_message(commit.message)
         print(f"{Fore.CYAN}Commit: {commit.hexsha[:7]}{Style.RESET_ALL}")
         print(f"Message: {result.get('message', commit.message).strip()}")
-        print(f"Score: {result['score']}/2")
+        print(f"Score: {result['score']}/3")
 
-        for rule, isOk in result["rules"].items():
-            color = Fore.GREEN if isOk else Fore.RED
-            print(f"{rule}: {color} {"OK" if isOk else "NOT OK"}{Style.RESET_ALL}")
+        for item, rule in result["rules"].items():
+            color = Fore.GREEN if rule["isValid"] else Fore.RED
+            print(f"{item}: {color} {rule["description"]}{Style.RESET_ALL}")
 
         total_score += result["score"]
 
     print(
-        f"{Fore.YELLOW} \nScore global: {total_score}/{len(commits)*2} {Style.RESET_ALL}"
+        f"{Fore.YELLOW} \nScore global: {total_score}/{len(commits)*3} {Style.RESET_ALL}"
     )
-
-
-if __name__ == "__main__":
-    main()
