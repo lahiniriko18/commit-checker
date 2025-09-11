@@ -1,11 +1,14 @@
 import sys
-from git import Repo
+
 from colorama import Fore, Style
+from git import Repo
 
 repo = Repo(".")
 
 
 def check_commit_message(message: str):
+    list_message = message.splitlines()
+    # if len(list_message)
     rules = {
         "non_vide": bool(message.strip()),
         "longueur_ok": len(message.splitlines()[0]) <= 72,
