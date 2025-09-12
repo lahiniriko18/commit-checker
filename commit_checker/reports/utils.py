@@ -19,11 +19,11 @@ def get_data(results: list):
     total_note = 0
     n = len(results[0]["rules"])
     for result in results:
-        commit = result["commit"]
+        commit = f"Commit {result["commit"]}"
         levelNote = check_level_note(result["note"], n)
 
         data[commit] = {
-            "commit": f"Commit {result["commit"]}",
+            "commit": result["commit"],
             "message": result["message"],
         }
         for item, rule in result["rules"].items():
