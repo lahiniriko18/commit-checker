@@ -3,16 +3,17 @@ from colorama import Fore
 DEFAULT_COMMIT_LIMIT = 5
 
 DICT_COMMIT = {
-    "build": "Système de build",
-    "ci": "Intégration continue",
-    "docs": "Documentation",
-    "feat": "Ajout d’une fonctionnalité",
-    "fix": "Correction de bogue",
-    "perf": "Amélioration des performances",
-    "refactor": "Changement du code qui ne change rien au fonctionnement",
-    "style": "Changement du style de code (Sans changer la logique)",
-    "test": "Modification des tests",
+    "build": "Build system changes",
+    "ci": "Continuous integration changes",
+    "docs": "Documentation changes",
+    "feat": "Adding a new feature",
+    "fix": "Bug fixes",
+    "perf": "Performance improvements",
+    "refactor": "Code changes that do not affect functionality",
+    "style": "Code style changes (no logic changes)",
+    "test": "Test code modifications"
 }
+
 
 COLOR_LEVEL = {
     "excellent": Fore.GREEN,

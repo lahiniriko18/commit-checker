@@ -5,7 +5,7 @@ from ..constants.constants import DEFAULT_COMMIT_LIMIT
 def argument_parser():
     parser = argparse.ArgumentParser(description="Commit Validation Tool")
     parser.add_argument(
-        "--limit",
+        "-lm","--limit",
         type=int,
         default=DEFAULT_COMMIT_LIMIT,
         help="Number of commits to check",
@@ -29,7 +29,7 @@ def argument_parser():
         help="Reverse the order of commits",
     )
     parser.add_argument(
-        "-l",
+        "-ls",
         "--list",
         action="store_true",
         help="Show the list of commit types",
