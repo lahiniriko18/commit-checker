@@ -4,7 +4,6 @@ from .validation import validate_empty, validate_length, validate_subject
 
 
 def check_commit(commit: Commit):
-
     rules = {
         "not_empty": validate_empty(commit.message),
         "length": validate_length(commit.message),

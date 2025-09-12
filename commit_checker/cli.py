@@ -14,11 +14,14 @@ def commit_cli():
         sys.exit(0)
 
     commits = get_commits(
-        args.path,
+        path=args.path,
+        branch=args.branch,
         limit=args.limit,
         reverse=args.reverse,
         first=args.first,
         last=args.last,
+        author=args.author,
+        all=args.all,
     )
     results = [check_commit(commit) for commit in commits]
     generate_report(results, args.output)

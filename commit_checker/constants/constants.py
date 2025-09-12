@@ -1,5 +1,7 @@
 from colorama import Fore
 
+DEFAULT_COMMIT_LIMIT = 5
+
 DICT_COMMIT = {
     "build": "Système de build",
     "ci": "Intégration continue",
