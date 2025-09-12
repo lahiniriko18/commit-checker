@@ -2,7 +2,7 @@ import argparse
 
 
 def argument_parser():
-    parser = argparse.ArgumentParser(description="")
+    parser = argparse.ArgumentParser(description="Outil de validation des commits")
     parser.add_argument(
         "--limit", type=int, default=5, help="Nombre de commits à vérifier"
     )
