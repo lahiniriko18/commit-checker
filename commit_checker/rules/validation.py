@@ -9,7 +9,7 @@ def validate_empty(message: str):
     }
 
 
-def validate_longueur(message: str):
+def validate_length(message: str):
     list_message = message.splitlines()
     subject = list_message[0] if len(list_message) > 0 else ""
     description = list_message[1] if len(list_message) > 1 else ""

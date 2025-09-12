@@ -2,9 +2,9 @@ import sys
 
 from colorama import Fore, Style
 from git import Repo
-from commit_checker.validation import (
+from commit_checker.rules.validation import (
     validate_empty,
-    validate_longueur,
+    validate_length,
     validate_subject,
 )
 
@@ -13,7 +13,7 @@ def check_commit_message(message: str):
 
     rules = {
         "non_vide": validate_empty(message),
-        "longueur_ok": validate_longueur(message),
+        "longueur_ok": validate_length(message),
         "sujet_ok": validate_subject(message),
     }
 
