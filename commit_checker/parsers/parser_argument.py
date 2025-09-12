@@ -11,11 +11,16 @@ def argument_parser():
         help="Number of commits to check",
     )
     parser.add_argument(
-        "--path", type=str, default=".", help="Path to the Git repository"
+        "-p", "--path", type=str, default=".", help="Path to the Git repository"
     )
-    parser.add_argument("--output", type=str, help="Export a report (JSON)")
-    parser.add_argument("--author", type=str, help="User commits")
-    parser.add_argument("--branch", type=str, default="HEAD", help="Commit branch")
+    parser.add_argument("-o", "--output", type=str, help="Export a report (JSON)")
+    parser.add_argument("-auth", "--author", type=str, help="User commits")
+    parser.add_argument(
+        "-b", "--branch", type=str, default="HEAD", help="Commit branch"
+    )
+    parser.add_argument(
+        "-f", "--format", type=str, default="json", help="Commit branch"
+    )
     parser.add_argument(
         "-r",
         "--reverse",

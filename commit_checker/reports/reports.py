@@ -5,11 +5,11 @@ from ..constants.constants import COLOR_LEVEL
 import sys
 
 
-def generate_report(results, output=None):
+def generate_report(results, output=None, format="json"):
     if results:
         if output:
             data = get_data(results)
-            fileName, filePath = export_json(".", data, output)
+            fileName, filePath = export_json(".", data, output, format)
             print(
                 f"{Fore.GREEN}Report {fileName} exported successfully to {filePath} {Style.RESET_ALL}"
             )

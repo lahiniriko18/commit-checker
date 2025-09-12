@@ -24,4 +24,4 @@ def commit_cli():
         all=args.all,
     )
     results = [check_commit(commit) for commit in commits]
-    generate_report(results, args.output)
+    generate_report(results, args.output, args.format)
