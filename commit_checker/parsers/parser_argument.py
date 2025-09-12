@@ -2,35 +2,35 @@ import argparse
 
 
 def argument_parser():
-    parser = argparse.ArgumentParser(description="Outil de validation des commits")
+    parser = argparse.ArgumentParser(description="Commit Validation Tool")
+    parser.add_argument("--limit", type=int, help="Number of commits to check")
+    parser.add_argument("--path", default=".", help="Path to the Git repository")
     parser.add_argument(
-        "--limit", type=int, help="Nombre de commits à vérifier"
+        "--output", type=str, help="Export a report (JSON)"
     )
-    parser.add_argument("--path", default=".", help="Chemin du dépôt Git")
-    parser.add_argument("--output", help="Exporter un rapport (JSON)")
 
     parser.add_argument(
         "-r",
         "--reverse",
         action="store_true",
         default=False,
-        help="Inverse l'ordre des commits",
+        help="Reverse the order of commits",
     )
     parser.add_argument(
         "-l",
         "--list",
         action="store_true",
-        help="Afficher la liste des types de commits",
+        help="Show the list of commit types",
     )
     parser.add_argument(
         "--last",
         action="store_true",
-        help="Afficher le dernier commit",
+        help="Check the last commit",
     )
     parser.add_argument(
         "--first",
         action="store_true",
-        help="Afficher le premier commit",
+        help="Check the first commit",
     )
 
     return parser.parse_args()
