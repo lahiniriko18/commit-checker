@@ -34,8 +34,11 @@ python main.py -l || python main.py --list
 5. Vérifier le dernier commit seulement
 python main.py --last
 
-6. Vérifier le premier commit seulement
+6. Exporter une rapport json
+python main.py --output nom_fichier.json
+
+7. Vérifier le premier commit seulement
 python main.py --first
 
-7. Consulter l'aide
+8. Consulter l'aide
 python main.py -h
