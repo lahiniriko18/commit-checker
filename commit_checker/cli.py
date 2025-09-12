@@ -17,6 +17,8 @@ def commit_cli():
         args.path,
         limit=args.limit,
         reverse=args.reverse,
+        first=args.first,
+        last=args.last,
     )
     results = [check_commit(commit) for commit in commits]
     generate_report(results, args.output)

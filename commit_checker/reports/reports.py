@@ -1,43 +1,50 @@
-import json
-import os
-
-from colorama import Fore, Style
 from collections import defaultdict
 
+from colorama import Fore, Style
 
-def export_json(folderPath, data, fileName):
-    filePath = os.path.join(folderPath, fileName)
-
-    with open(filePath, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+from .utils import export_json, get_data, check_level_note
+from ..constants.constants import COLOR_LEVEL
 
 
 def generate_report(results, output=None):
-    total_note = 0
-    data = defaultdict(dict)
-    for result in results:
-        commit = result["commit"]
-        print(f"{Fore.CYAN}Commit: {commit}{Style.RESET_ALL}")
-        print(f"Message: {result['message'].strip()}")
-        print(f"Note: {result['note']}/3")
+    if results:
+        total_note = 0
+        data = defaultdict(dict)
+        n = len(results[0]["rules"])
+        for result in results:
+            commit = result["commit"]
+            levelNote = check_level_note(result["note"], n)
 
-        data[commit] = {
-            "commit": commit,
-            "message": result["message"],
-            "note": f"{result["note"]}/3",
-        }
-        for item, rule in result["rules"].items():
-            color = Fore.GREEN if rule["isValid"] else Fore.RED
-            print(f"{item}: {color} {rule["description"]}{Style.RESET_ALL}")
-            data[commit][item] = rule["description"]
+            print(f"{Fore.CYAN}commit: {commit}{Style.RESET_ALL}")
+            print(f"message: {result['message'].strip()}")
 
-        total_note += result["note"]
-    print(
-        f"{Fore.YELLOW} \nNote global: {total_note}/{len(results)*3} {Style.RESET_ALL}"
-    )
+            for item, rule in result["rules"].items():
+                color = Fore.GREEN if rule["isValid"] else Fore.RED
+                print(f"{item}: {color} {rule["description"]}{Style.RESET_ALL}")
 
-    data = dict(data)
-    data["total_note"] = f"{total_note}/{len(results)*3}"
+            print(
+                "note: "
+                + f"{COLOR_LEVEL[levelNote.lower()]}{result['note']}/{n}"
+                + f" ({levelNote})\n"
+                + Style.RESET_ALL
+            )
 
-    if output:
-        export_json(output, data, "rapport.json")
+            data[commit] = get_data(result)
+            total_note += result["note"]
+
+        levelTotalNote = check_level_note(total_note, len(results) * n)
+        print(
+            COLOR_LEVEL[levelTotalNote.lower()]
+            + "Note global: "
+            + f"{total_note}/{len(results)*n}"
+            + f" ({levelTotalNote})"
+            + Style.RESET_ALL
+        )
+
+        data = dict(data)
+        data["total_note"] = f"{total_note}/{len(results)*3}"
+
+        if output:
+            export_json(output, data, "rapport.json")
+    else:
+        print(f"{Fore.YELLOW}No commits to analyze.{Style.RESET_ALL}")
