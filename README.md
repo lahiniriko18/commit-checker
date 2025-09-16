@@ -28,21 +28,104 @@ pip install -r requirements.txt
 
 ## ▶️ Utilisation
 
-### Lancer l’outil en CLI :
+### 1. Verifier tous le commits :
 ```bash
-python -m commit_checker.cli
+python main.py --all
 ```
 
-### Vérifier un message de commit spécifique :
+### 2. Verifier les 5 derniers commits :
 ```bash
-python -m commit_checker.cli "feat(auth): add login feature"
+python main.py
 ```
+
+### 3. Inverser la vérification :
+```bash
+python main.py --reverse
+```
+#### Options :
+-r, --reverse    Inverser la vérification (du dernier au plus récent ou vice versa)
+
+### 4. Vérifier les commits avec une limite
+
+```bash
+python main.py --limit <limite>
+```
+#### Options :
+-lm, --limit    Limiter les commits à vérifier (ex: --limit 5)
+Par défaut : 5 (si non spécifié)
+
+
+### 5. Liste des normes du commit :
+```bash
+python main.py --list
+```
+#### Options:
+-ls, --list       Lister les types des commits valides
+
+### 6. Exporter une rapport JSON ou TXT :
+```bash
+python main.py --output <nom_fichier> [--format json|txt]
+```
+### Exemple
+```bash
+python main.py --output report --format json
+```
+#### Options:
+--output, -o     Specifier le nom du fichier (ex: report.json ou report.txt)
+--format         Choisir le format du fichier à exporter: "json" ou "txt"
+Par défaut:      json (si non specifié)
+
+### 7. Vérifier le premier commit seulement :
+```bash
+python main.py --first
+```
+
+### 8. Vérifier le dernier commit seulement :
+```bash
+python main.py --last
+```
+
+### 9. Vérifier le commit aujourd'hui:
+```bash
+python main.py --now
+```
+Ajouter --all pour vérifier tous les commits aujourd'hui sinon il vérifie les 5 derniers commits aujourd'hui
+
+### 10. Vérfier les commits dans une répot spécifique :
+```bash
+python main.py --path <chemin\vers\repos>
+```
+### Exemple:
+```bash
+python main.py --path D:\LNJ\projet
+```
+#### Options:
+-p, --path     Vérifier les commits dans une autre répos  
+
+### 11. Vérifier les commits dans une branche :
+```bash
+python main.py --branch
+```
+#### Options:
+-b, --branch     Specifier le branche cible (ex: auth)
+Par défaut:      HEAD (si non specifié)
+
+### 12. Consulter l'aide:
+```bash
+python main.py --help
+```
+#### Options:
+-b, --help     Consulter des aides pour les différentes commandes
 
 ### Exemple de sortie :
 ```
-✔ Message non vide
-✔ Longueur correcte
-✅ Commit valide !
+commit: e796736
+message: feat: add type format repport
+report format txt or json by using --format
+not_empty:  OK
+length:  OK
+content:  OK
+note: 3/3 (Excellent)
 ```
 
 ---
@@ -50,12 +133,25 @@ python -m commit_checker.cli "feat(auth): add login feature"
 ## 📂 Structure du projet
 
 ```
-commit-checker/
-│── commit_checker/
-│   │── __init__.py
-│   │── cli.py           # Point d’entrée CLI
-│   │── git_parser.py    # Gestion des commits Git
-│   │── validation.py    # Règles de validation
+└── 📁commit_checker
+    └── 📁constants
+        ├── constants.py
+    └── 📁filters
+        ├── commit_filter.py
+    └── 📁parsers
+        ├── git_parser.py
+        ├── parser_argument.py
+    └── 📁reports
+        ├── commit_list.py
+        ├── reports.py
+        ├── utils.py
+    └── 📁rules
+        ├── rules.py
+    └── 📁validations
+        ├── validation_reports.py
+        ├── validation_rules.py
+    ├── cli.py
+└── 📁venv 
 │── requirements.txt
 │── README.md
 ```
@@ -108,19 +204,3 @@ Exemple :
 ```
 closes #42
 ```
-
----
-
-## 🤝 Contribution
-
-1. Forker le projet  
-2. Créer une branche (`git checkout -b feature/ma-feature`)  
-3. Committer avec un message respectant la norme  
-4. Pousser la branche (`git push origin feature/ma-feature`)  
-5. Créer une Pull Request  
-
----
-
-## 📄 Licence
-
-Ce projet est sous licence **MIT**.
