@@ -1,71 +1,126 @@
-##### OUTIL DE VALIDATION DES COMMITS
+# 📝 Commit Checker
 
-# Installation
+Un outil en ligne de commande (CLI) développé en **Python** permettant de vérifier la qualité des messages de commit Git en fonction de règles définies (longueur, non-vide, etc.) et des normes de convention de commit.
 
-1. Cloner le dépôt
-   git clone https://github.com/lahiniriko18/commit-checker.git
-   cd commit-checker
+---
 
-2. Créer l'environnement virtuel
-   python -m venv venv
+## 🚀 Installation
 
-3. Activer l'environnement
+### 1. Cloner le dépôt
+```bash
+git clone https://github.com/lahiniriko18/commit-checker.git
+cd commit-checker
+```
 
-   > > > venv\Scripts\activate //windows
-   > > > source venv/bin/activate //linux
+### 2. Créer un environnement virtuel
+```bash
+python -m venv venv
+source venv/bin/activate   # sous Linux / MacOS
+venv\Scripts\activate      # sous Windows
+```
 
-4. Installer les dépendances:
-   pip install -r requirements.txt
+### 3. Installer les dépendances
+```bash
+pip install -r requirements.txt
+```
 
-# Utilisation
+---
 
-1. Verifier les 5 derniers commits
-   python main.py
+## ▶️ Utilisation
 
-2. Vérifier tous les commits
-   python main.py --all
+### Lancer l’outil en CLI :
+```bash
+python -m commit_checker.cli
+```
 
-3. Inverser la liste des commits
-   python main.py -r
-   python main.py --reverse
+### Vérifier un message de commit spécifique :
+```bash
+python -m commit_checker.cli "feat(auth): add login feature"
+```
 
-4. Verifier les commits avec une limite
-   python main.py --limit <limite>
-   Options:
-   -lm, --limit       Limiter les commits à vérifier (ex: --limit 5)
-   Par défaut: 5 (si non specifié)
+### Exemple de sortie :
+```
+✔ Message non vide
+✔ Longueur correcte
+✅ Commit valide !
+```
 
+---
 
-5. Liste des normes du commit
-   python main.py --list
-   python main.py -ls
-   Options:
-   -ls, --list       Lister les types des commits valides
+## 📂 Structure du projet
 
-6. Exporter une rapport JSON ou TXT
-   python main.py --output <nom_fichier> [--format json|txt]
-   Options:
-   --output, -o     Specifier le nom du fichier (ex: report.json ou report.txt)
-   --format Choisir le format du fichier à exporter: "json" ou "txt"
-   Par défaut:      json (si non specifié)
+```
+commit-checker/
+│── commit_checker/
+│   │── __init__.py
+│   │── cli.py           # Point d’entrée CLI
+│   │── git_parser.py    # Gestion des commits Git
+│   │── validation.py    # Règles de validation
+│── requirements.txt
+│── README.md
+```
 
-7. Vérifier le premier commit seulement
-   python main.py --first
+---
 
-8. Vérifier le dernier commit seulement
-   python main.py --last
+## 📏 Norme de Commit (Git Standard)
 
-9. Vérifier le commit aujourd'hui
-   python main.py --now
-   Options:
-   Ajouter --all pour récuperer tous les commits aujourd'hui
+Tous les commits doivent respecter le format suivant :
 
-10. Vérifier les commits dans une branche
-   python main.py --branch
-   python main.py -b
-   Options:
-   -b, --branch     Specifier le branche cible (ex: auth)
-   Par défaut:      HEAD (si non specifié)
+```
+<type>(<portée>): <sujet>
+<description>
+<footer>
+```
 
-11. Consulter l'aide
-   python main.py -h
+### 🔹 Types autorisés :
+- **build**: Système de build (ex: gulp, webpack, npm)
+- **ci**: Intégration continue (ex: Travis, Circle, BrowserStack, SauceLabs)
+- **docs**: Documentation
+- **feat**: Ajout d’une fonctionnalité
+- **fix**: Correction de bogue
+- **perf**: Amélioration des performances
+- **refactor**: Changement du code sans modification du comportement
+- **style**: Changement de style de code (sans changer la logique)
+- **test**: Modification ou ajout de tests
+
+### 🔹 Portée *(optionnelle)* :
+Divise le projet en module/partie. Exemple :  
+```
+feat(auth): add login
+```
+
+### 🔹 Sujet :
+- Verbe à l’impératif  
+- Pas de majuscule  
+- Pas de point final  
+
+Exemple :  
+```
+fix(api): correct error handling
+```
+
+### 🔹 Description :
+- Explique **pourquoi** le changement, pas son contenu.
+
+### 🔹 Footer :
+Utilisé pour lier des issues ou PR.  
+Exemple :  
+```
+closes #42
+```
+
+---
+
+## 🤝 Contribution
+
+1. Forker le projet  
+2. Créer une branche (`git checkout -b feature/ma-feature`)  
+3. Committer avec un message respectant la norme  
+4. Pousser la branche (`git push origin feature/ma-feature`)  
+5. Créer une Pull Request  
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence **MIT**.
